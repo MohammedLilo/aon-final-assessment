@@ -31,8 +31,8 @@ namespace aon_final_assessment.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values);
             
-            if (productInputDTO.ExpirationDate != null && productInputDTO.ProductionDate > productInputDTO.ExpirationDate)
-                return BadRequest("expiration date cannot be earlier than production date");
+            if (productInputDTO.ExpirationDate != null && productInputDTO.ProductionDate >= productInputDTO.ExpirationDate)
+                return BadRequest("production date must be earlier than expiration date");
 
             Product newProduct = Product.FromProductInputDTO(productInputDTO);
             await _productService.SaveAsync(newProduct);
